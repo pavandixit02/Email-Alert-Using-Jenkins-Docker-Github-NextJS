@@ -5,7 +5,8 @@ pipeline {
         CONTAINER_NAME = "nestjs-app"
         IMAGE_NAME = "nesths-image"
         EMAIL = "pavandixit775@gmail.com"
-        PORT = "3300"
+        HOST_PORT = "3301"
+        CONTAINER_PORT = "3300"
     }
 
     stages {
@@ -31,7 +32,7 @@ pipeline {
         stage('Docker Container Run') {
             steps {
                 sh '''
-                    docker run -d -p ${PORT}:${PORT} --name $CONTAINER_NAME $IMAGE_NAME
+                    docker run -d -p ${HOST_PORT}:${CONTAINER_PORT} --name $CONTAINER_NAME $IMAGE_NAME
                 '''
             }
         }
@@ -39,7 +40,7 @@ pipeline {
             steps {
                emailext(
                 subject: "NestJS App Deployed Successfully!",
-                body: "Your Nest JS app is Deployed! http://localhost:${PORT}/",
+                body: "Your Nest JS app is Deployed! http://localhost:${HOST_PORT}/",
                 to: "${EMAIL}"
                )
             }
