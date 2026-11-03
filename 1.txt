@@ -1,0 +1,147 @@
+Started by GitHub push by pavandixit02
+Obtained Jenkinsfile from git https://github.com/pavandixit02/Email-Alert-Using-Jenkins-Docker-Github-NextJS.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/cicd
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/cicd/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/pavandixit02/Email-Alert-Using-Jenkins-Docker-Github-NextJS.git # timeout=10
+Fetching upstream changes from https://github.com/pavandixit02/Email-Alert-Using-Jenkins-Docker-Github-NextJS.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.56.0'
+ > git fetch --tags --force --progress -- https://github.com/pavandixit02/Email-Alert-Using-Jenkins-Docker-Github-NextJS.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision ebae77d11dcf685e47e785fb16d28ce486eb29af (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f ebae77d11dcf685e47e785fb16d28ce486eb29af # timeout=10
+Commit message: "Jenkins File Update!"
+ > git rev-list --no-walk a467488cbf648c965f5eba4b1926224909e9cc19 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone Repo)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/cicd/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/pavandixit02/Email-Alert-Using-Jenkins-Docker-Github-NextJS.git # timeout=10
+Fetching upstream changes from https://github.com/pavandixit02/Email-Alert-Using-Jenkins-Docker-Github-NextJS.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.56.0'
+ > git fetch --tags --force --progress -- https://github.com/pavandixit02/Email-Alert-Using-Jenkins-Docker-Github-NextJS.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision ebae77d11dcf685e47e785fb16d28ce486eb29af (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f ebae77d11dcf685e47e785fb16d28ce486eb29af # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main ebae77d11dcf685e47e785fb16d28ce486eb29af # timeout=10
+Commit message: "Jenkins File Update!"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] sh
++ docker build -t nesths-image .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 179B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:24-alpine
+#2 DONE 1.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 52B 0.0s done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85
+#5 resolve docker.io/library/node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85 0.1s done
+#5 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 19.30kB 0.0s done
+#4 DONE 0.1s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [3/6] COPY package*.json ./
+#7 CACHED
+
+#8 [4/6] RUN npm install
+#8 CACHED
+
+#9 [5/6] COPY . .
+#9 DONE 0.1s
+
+#10 [6/6] RUN npm run build
+#10 0.705 
+#10 0.705 > cicd@0.0.1 build
+#10 0.705 > nest build
+#10 0.705 
+#10 DONE 4.6s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 0.2s done
+#11 exporting manifest sha256:f0c3dda9fe30b2511890be2de1b51c69eadf94e9cfdf0f672b2e7b5fe7692787 0.0s done
+#11 exporting config sha256:39a6489bcbb0be656a19f69b05dd3bf8fb6d268a1bed805e9dbfb036a10263d0 0.0s done
+#11 exporting attestation manifest sha256:d312aa720c59fdcb595bee85ae318c4e40e346e7e46b83a4db73ebc7e14aa873
+#11 exporting attestation manifest sha256:d312aa720c59fdcb595bee85ae318c4e40e346e7e46b83a4db73ebc7e14aa873 0.0s done
+#11 exporting manifest list sha256:db611ad9b11874d1cdf88bd9e07ff53e8f8d5a9bc081379e86fb27da18da7fb8 0.0s done
+#11 naming to docker.io/library/nesths-image:latest done
+#11 unpacking to docker.io/library/nesths-image:latest
+#11 unpacking to docker.io/library/nesths-image:latest 13.0s done
+#11 DONE 13.5s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Stop & Remove Previous Container)
+[Pipeline] sh
++ docker stop nestjs-app
+Error response from daemon: No such container: nestjs-app
++ true
++ docker rm nestjs-app
+Error response from daemon: No such container: nestjs-app
++ true
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Container Run)
+[Pipeline] sh
++ docker run -d -p 3301:3300 --name nestjs-app nesths-image
+b2675db4981e24839fc5f781d9fca08b43ed5ae539e343c1c18a9fb1e3db4155
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Send Email Notification)
+[Pipeline] emailext
+Sending email to: pavandixit775@gmail.com
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
